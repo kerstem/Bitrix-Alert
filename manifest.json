@@ -8,7 +8,7 @@
   [
 		{
 			"matches": ["https://supersmoke.ru/bitrix/admin/sale_order.php*"],
-			"js": ["main.js"]
+			"js": ["orders_page.js"]
 		}
 	]
 }

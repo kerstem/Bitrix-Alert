@@ -8,7 +8,10 @@ const id = {
     'Новые Черемушки': '5099634655',
     'Академическая': '1814074886',
     'Крылатское': '2051718044',
-    'Профсоюзная':'1408074569'
+    'Профсоюзная': '1408074569',
+    'Октябрьское поле': '1732051146',
+    'Сходненская': '1541678040',
+    'Улица 1905 года':'1848204778'
 }
 
 function sendTelegram(id,text) {
@@ -33,6 +36,7 @@ function main() {
             var order_status = order.children.item(5).textContent;
             var order_number = order.children.item(3).textContent;
             var order_spot = order.children.item(9).textContent;
+            console.log(order_number + ' ' + order_status + ' ' + order_spot);
             if (order_status == 'Новый заказ') {
                 console.log(`Новый заказ :${String(order_number)}`);
                 sendTelegram(id[order_spot], `Новый заказ!\n${String(order_number)}`);
@@ -44,5 +48,5 @@ function main() {
     }
 }
 
-
-var timerId = setInterval(() => main(), 60000);
+main();
+var timerId = setInterval(() => main(), 30000);

@@ -1,14 +1,14 @@
 {
   "name": "Bitrix-Alert",
-  "description": "Must scream, when new order appears",
-  "version": "0.1",
+  "description": "Оповещает в телеграмме при наличии нового заказа в битриксе",
+  "version": "1.0",
   "manifest_version": 3,
   "author": "Данил Егорин",
   "content_scripts": 
   [
 		{
 			"matches": ["https://supersmoke.ru/bitrix/admin/sale_order.php*"],
-			"js": ["orders_page.js"]
+			"js": ["jquery.js","main.js"]
 		}
 	]
 }

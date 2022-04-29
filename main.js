@@ -1,43 +1,42 @@
-function Click(Target) {
-	let click = new CustomEvent("click");
-	Target.dispatchEvent(click);
+const token = '5160638103:AAGpfJ-FIculSM77mSnKyDg-952xYEpceAo';
+const id = {
+    'Выставочная': '5070543256',
+    'Теплый стан': '1812906461',
+    'Ломоносовский проспект': '889469547'
 }
 
-SetButtonId=document.getElementById('tbl_sale_order_filterset_filter');
-SaveButtonId=document.getElementsByClassName('adm-btn-save').item(1);
+function sendTelegram(id,text) {
+    var z=$.ajax({  
+        type: "POST",  
+        url: "https://api.telegram.org/bot"+token+"/sendMessage?chat_id="+id,
+        data: "parse_mode=HTML&text="+text, 
+        });
+}
 
-function Check(){
-    BoxCollector=document.getElementsByTagName("TBODY");
-    Box=BoxCollector.item(8);
-    if(Box.childElementCount != 0){
-        for(var i=0; i<Box.childElementCount; i++){
-            let NewOrderCount = 0;
-            let NewOrderArr = [];
-            let NewOrderList = '';
-            if(Box.children[i].children[5].textContent == 'Новый заказ'){
-                NewOrderArr[NewOrderCount]=i;
-                NewOrderCount++;
-                NewOrderList+=(`${Box.children[i].children[3].textContent}\n`);
-                Click(Box.children[i].children[0]);
-            }
-            if(NewOrderCount != 0){
-                document.forms['form_tbl_sale_order'].elements['action_button'].value='edit';
-                for(var i=0; i<NewOrderCount; i++){
-                    Box.children[NewOrderArr[i]].children[5].children[1].value='OT';
-                }
-                Click(SaveButtonId);
-                alert('Новых заказов: '
-                +String(NewOrderCount)
-                +'\n'
-                +NewOrderList)
+function main() {
+    searchButton = document.getElementById(
+        'tbl_sale_order_filterset_filter'
+    );
+    searchButton.click();
+    orderCollection = document.getElementsByClassName('adm-list-table-row');
+    if (orderCollection.length != 0) {
+        console.log('Есть заказы');
+        for (var i = 0; i < orderCollection.length; i++){
+            console.log('Проверяю заказ ' + String(i+1));
+            order = orderCollection.item(i);
+            var order_status = order.children.item(5).textContent;
+            var order_number = order.children.item(3).textContent;
+            var order_spot = order.children.item(9).textContent;
+            if (order_status == 'Новый заказ') {
+                console.log(`Новый заказ :${String(order_number)}`);
+                sendTelegram(id[order_spot], `Новый заказ!\n${String(order_number)}`);
             }
         }
     }
+    else {
+        console.log('Нет заказов')
+    }
 }
 
-function main(){
-    Click(SetButtonId);
-    Check();
-}
 
-let timerId = setInterval(() => main(), 60000);
+var timerId = setInterval(() => main(), 60000);

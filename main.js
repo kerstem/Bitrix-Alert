@@ -11,15 +11,15 @@ const id = {
     'Профсоюзная': '1408074569',
     'Октябрьское поле': '1732051146',
     'Сходненская': '1541678040',
-    'Улица 1905 года':'1848204778'
+    'Улица 1905 года': '1848204778'
 }
 
-function sendTelegram(id,text) {
-    var z=$.ajax({  
-        type: "POST",  
-        url: "https://api.telegram.org/bot"+token+"/sendMessage?chat_id="+id,
-        data: "parse_mode=HTML&text="+text, 
-        });
+function sendTelegram(id, text) {
+    var z = $.ajax({
+        type: "POST",
+        url: "https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + id,
+        data: "parse_mode=HTML&text=" + text,
+    });
 }
 
 function main() {
@@ -27,24 +27,46 @@ function main() {
         'tbl_sale_order_filterset_filter'
     );
     searchButton.click();
-    orderCollection = document.getElementsByClassName('adm-list-table-row');
+    var status_col;
+    var number_col;
+    var spot_col;
+    let orderHeader = document.getElementsByClassName('adm-list-table-header').item(0).children;
+    for (var i = 0; i < orderHeader.length; i++) {
+        switch (orderHeader.item(i).firstElementChild.textContent) {
+            case 'ID':
+                number_col = i;
+                console.log(`Номера заказов в колонке ${String(i)}`);
+                break;
+            case 'Статус':
+                status_col = i;
+                console.log(`Статусы заказов в колонке ${String(i)}`);
+                break;
+            case 'Розн.магазин':
+                spot_col = i;
+                console.log(`Магазины заказов в колонке ${String(i)}`);
+                break;
+        }
+    }
+    console.log('');
+    var orderCollection = document.getElementsByClassName('adm-list-table-row');
     if (orderCollection.length != 0) {
         console.log('Есть заказы');
-        for (var i = 0; i < orderCollection.length; i++){
-            console.log('Проверяю заказ ' + String(i+1));
-            order = orderCollection.item(i);
-            var order_status = order.children.item(5).textContent;
-            var order_number = order.children.item(3).textContent;
-            var order_spot = order.children.item(9).textContent;
+        for (var i = 0; i < orderCollection.length; i++) {
+            console.log(`Проверяю заказ ${String(i + 1)}`);
+            let order = orderCollection.item(i);
+            let order_status = order.children.item(status_col).textContent;
+            let order_number = order.children.item(number_col).textContent;
+            let order_spot = order.children.item(spot_col).textContent;
             console.log(order_number + ' ' + order_status + ' ' + order_spot);
             if (order_status == 'Новый заказ') {
                 console.log(`Новый заказ :${String(order_number)}`);
                 sendTelegram(id[order_spot], `Новый заказ!\n${String(order_number)}`);
             }
         }
+        console.log('')
     }
     else {
-        console.log('Нет заказов')
+        console.log('Нет заказов\n')
     }
 }
 

@@ -1,26 +1,4 @@
-const token = '5160638103:AAGpfJ-FIculSM77mSnKyDg-952xYEpceAo';
-const id = {
-    'Выставочная': '5070543256',
-    'Теплый стан': '1812906461',
-    'Ломоносовский проспект': '889469547',
-    'Каширская': '1931745462',
-    'Юго-Западная': '1808333118',
-    'Новые Черемушки': '5099634655',
-    'Академическая': '1814074886',
-    'Крылатское': '2051718044',
-    'Профсоюзная': '1408074569',
-    'Октябрьское поле': '1732051146',
-    'Сходненская': '1541678040',
-    'Улица 1905 года': '1848204778'
-}
-
-function sendTelegram(id, text) {
-    var z = $.ajax({
-        type: "POST",
-        url: "https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + id,
-        data: "parse_mode=HTML&text=" + text,
-    });
-}
+import { Telegram } from "./telegram.js";
 
 function main() {
     searchButton = document.getElementById(
@@ -60,7 +38,7 @@ function main() {
             console.log(order_number + ' ' + order_status + ' ' + order_spot);
             if (order_status == 'Новый заказ') {
                 console.log(`Новый заказ :${String(order_number)}`);
-                sendTelegram(id[order_spot], `Новый заказ!\n${String(order_number)}`);
+                Telegram.send(id[order_spot], `Новый заказ!\n${String(order_number)}`);
             }
         }
         console.log('')

@@ -4,11 +4,8 @@
   "version": "1.0",
   "manifest_version": 3,
   "author": "Данил Егорин",
-  "content_scripts": 
-  [
-		{
-			"matches": ["https://supersmoke.ru/bitrix/admin/sale_order.php*"],
-			"js": ["jquery.js","main.js"]
-		}
-	]
+  "permissions": [ "activeTab", "scripting", "storage" ],
+  "background": {
+    "service_worker": "js/background.js"
+  }
 }

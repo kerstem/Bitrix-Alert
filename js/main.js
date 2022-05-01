@@ -18,10 +18,10 @@ class Telegram{
     };
     
     static send(target, text) {
-        var request = new XMLHttpRequest();
+        let request = new XMLHttpRequest();
+        request.open('POST', `https://api.telegram.org/bot${Telegram.token}/sendMessage?chat_id=${Telegram.id[target]}`);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.open('POST',`https://api.telegram.org/bot${Telegram.token}/sendMessage?chat_id=${Telegram.id[target]}`);
-        request.send(`parse_mode=HTML&text=${text}`);
+        request.send(`parse_mode=HTML&text=${text}`)
     }
 }
 
@@ -64,7 +64,7 @@ function main() {
             console.log(order_number + ' ' + order_status + ' ' + order_spot);
             if (order_status == 'Новый заказ') {
                 console.log(`Новый заказ :${String(order_number)}`);
-                Telegram.send(Telegram.id[order_spot], `Новый заказ!\n${String(order_number)}`);
+                Telegram.send(order_spot, `Новый заказ!\n${String(order_number)}`);
             }
         }
         console.log('')

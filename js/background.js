@@ -35,10 +35,8 @@ class Background{
     update() {
         console.log('Начал проверку');
         this.targets.forEach((tabId) => {
-            chrome.tabs.get((tabId), (tab) => {
-                if (tab.active != true) {
-                    chrome.tabs.reload(tabId);
-                };
+            chrome.tabs.get((tabId), () => {
+                chrome.tabs.reload(tabId);
                 chrome.scripting.executeScript({ target: { tabId: tabId }, files: ["/js/main.js"] });
                 console.log(`Загрузил скрипт во вкладку ${tabId}`)
             })

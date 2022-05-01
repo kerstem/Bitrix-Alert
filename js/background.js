@@ -18,6 +18,11 @@ class Background{
                     console.log(this.targets)
                 }
             }
+            else {
+                if (this.targets.includes(tabId)) {
+                    this.targets.splice(tabId)
+                }
+            }
         });
     }
     onAll() {

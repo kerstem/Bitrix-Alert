@@ -1,3 +1,5 @@
+//для отправки в телегу
+
 export class Telegram{
     static token = '5160638103:AAGpfJ-FIculSM77mSnKyDg-952xYEpceAo';
     static id = {

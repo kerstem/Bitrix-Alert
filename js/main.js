@@ -1,6 +1,9 @@
+//страничный встраиваемый скрипт
+
 import { Telegram } from "./telegram.js";
 
 function main() {
+    console.log('Начал проверку\n');
     searchButton = document.getElementById(
         'tbl_sale_order_filterset_filter'
     );
@@ -46,7 +49,7 @@ function main() {
     else {
         console.log('Нет заказов\n')
     }
+    console.log('Закончил проверку\n')
 }
 
 main();
-var timerId = setInterval(() => main(), 30000);

@@ -4,8 +4,9 @@
   "version": "1.0",
   "manifest_version": 3,
   "author": "Данил Егорин",
-  "permissions": [ "activeTab", "scripting", "storage" ],
+  "permissions": [ "tabs", "scripting", "storage" ],
+  "host_permissions": ["*://*/*"],
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "/js/background.js"
   }
 }

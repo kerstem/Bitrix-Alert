@@ -19,8 +19,10 @@ class Background{
                 }
             }
             else {
-                if (this.targets.includes(tabId)) {
-                    this.targets.splice(tabId)
+                if (this.targets.includes(tabId)==true) {
+                    this.targets=this.targets.filter((id) => id != tabId);
+                    console.log(`Убрал вкладку ${tabId} из целей`);
+                    console.log(this.targets)
                 }
             }
         });
@@ -33,8 +35,11 @@ class Background{
         });
     }
     onRemoved(tabId) {
-        if (this.targets.indexOf(tabId) != -1) {
-            this.targets.splice(tabId)
+        console.log(`Закрылась вкладка ${tabId}`);
+        if (this.targets.includes(tabId) == true) {
+            this.targets=this.targets.filter((id) => id != tabId);
+            console.log(`Убрал вкладку ${tabId} из целей`);
+            console.log(this.targets)
         }
     }
     update() {

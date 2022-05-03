@@ -1,14 +1,29 @@
 {
-  "name": "Bitrix-Alert",
-  "description": "Must scream, when new order appears",
-  "version": "0.1",
+  "name": "SS Bitrix Alert",
+  "description": "Оповещает в телеграмме при наличии нового заказа в битриксе",
+  "action":{
+    "default_popup": "popup.html",
+    "default_icon": "/icons/512.png"
+  },
+  "icons":{
+    "16":"/icons/16.png",
+    "32":"/icons/32.png",
+    "48":"/icons/48.png",
+    "64":"/icons/64.png",
+    "72":"/icons/72.png",
+    "96":"/icons/96.png",
+    "128":"/icons/128.png",
+    "192":"/icons/192.png",
+    "256":"/icons/256.png",
+    "512":"/icons/512.png"
+  },
+  "version": "1.0",
   "manifest_version": 3,
   "author": "Данил Егорин",
-  "content_scripts": 
-  [
-		{
-			"matches": ["https://supersmoke.ru/bitrix/admin/sale_order.php*"],
-			"js": ["main.js"]
-		}
-	]
+  "permissions": [ "tabs", "scripting", "storage" ],
+  "host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "/js/background.js",
+    "type": "module"
+  }
 }
